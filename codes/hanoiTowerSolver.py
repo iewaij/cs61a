@@ -1,7 +1,8 @@
 def move(origin, destination):
     '''
     origin, destination: str
-    Print out movement from origin to destination
+    
+    prints out movement from origin to destination
     '''
     print('Move from %s to %s.' % (origin, destination))
 
@@ -11,7 +12,8 @@ def hanoiTowerSolver(n, fr, to, spare):
     fr: str, the starting rod
     to: str, the destination rod
     spare: str, the rod other than 'fr' and 'to'
-    Print out how to move n disks from the starting rod to the the destination rod.
+    
+    prints out how to move n disks from the starting rod to the the destination rod.
     '''
     if n == 1:
         move(fr, to)
