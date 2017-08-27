@@ -3,7 +3,10 @@ Codes, notes and homework I wrote or copied for CS 61a: Structure and Interpreta
 
 ## Notes
 ### Higher-Order Functions
-
+Functions as Arguments
+Functions as General Methods
+Functions as Returned Values
+Currying
 ### ~~Recursive Functions~~
 
 ### ~~Data Abstraction~~

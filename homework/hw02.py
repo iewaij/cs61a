@@ -33,9 +33,9 @@ def summation(n, term):
     >>> summation(5, square)   # 1^2 + 2^2 + 3^2 + 4^2 + 5^2
     55
     """
-    total, k = 0, 0
+    total, k = 0, 1
     while k <= n:
-        total, k = total + term(k), k + 1
+        total, k = add(total, term(k)), k + 1
     return total
 
 def product(n, term):
@@ -53,9 +53,9 @@ def product(n, term):
     >>> product(5, square)   # 1^2 * 2^2 * 3^2 * 4^2 * 5^2
     14400
     """
-    total, k = 0, 0
+    total, k = 1, 1
     while k <= n:
-        total, k = total * term(k), k + 1
+        total, k = mul(total, term(k)), k + 1
     return total
 
 # The identity function, defined using a lambda expression!
@@ -101,7 +101,10 @@ def accumulate(combiner, base, n, term):
     >>> accumulate(mul, 2, 3, square)   # 2 * 1^2 * 2^2 * 3^2
     72
     """
-    "*** YOUR CODE HERE ***"
+    total, k = base, 1
+    while k <= n:
+        total, k = combiner(total, term(k)), k + 1
+    return total
 
 def summation_using_accumulate(n, term):
     """Returns the sum of term(1) + ... + term(n). The implementation
@@ -116,8 +119,7 @@ def summation_using_accumulate(n, term):
     ...       ['Recursion', 'For', 'While'])
     True
     """
-    "*** YOUR CODE HERE ***"
-    return _______
+    return accumulate(add, 0, n, term)
 
 def product_using_accumulate(n, term):
     """An implementation of product using accumulate.
@@ -131,8 +133,7 @@ def product_using_accumulate(n, term):
     ...       ['Recursion', 'For', 'While'])
     True
     """
-    "*** YOUR CODE HERE ***"
-    return _______
+    return accumulate(mul, 1, n, term)
 
 def filtered_accumulate(combiner, base, pred, n, term):
     """Return the result of combining the terms in a sequence of N terms
@@ -158,7 +159,10 @@ def filtered_accumulate(combiner, base, pred, n, term):
     True
     """
     def combine_if(x, y):
-        "*** YOUR CODE HERE ***"
+        if pred(y):
+            return combiner(x, y)
+        else:
+            return x
     return accumulate(combine_if, base, n, term)
 
 def odd(x):
@@ -182,10 +186,34 @@ def repeated(f, n):
     >>> repeated(square, 0)(5)
     5
     """
-    "*** YOUR CODE HERE ***"
+    def repeat(total):
+        for i in range(n):
+            total = f(total)
+        return total
+    return repeat
+
+# For an extra challenge, try defining repeated using compose1 and your accumulate function in a single one-line return statement.
 
 def compose1(f, g):
     """Return a function h, such that h(x) = f(g(x))."""
     def h(x):
         return f(g(x))
     return h
+
+def repeated1(f, n):
+    """Return the function that computes the nth application of f.
+
+    >>> add_three = repeated(increment, 3)
+    >>> add_three(5)
+    8
+    >>> repeated(triple, 5)(1) # 3 * 3 * 3 * 3 * 3 * 1
+    243
+    >>> repeated(square, 2)(5) # square(square(5))
+    625
+    >>> repeated(square, 4)(5) # square(square(square(square(5))))
+    152587890625
+    >>> repeated(square, 0)(5)
+    5
+    """
+
+repeated1(square, 2)(5)
